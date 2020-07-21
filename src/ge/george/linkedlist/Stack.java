@@ -4,17 +4,15 @@ import java.util.Optional;
 
 public class Stack<K> {
     LinkedList<K> linkedList = new LinkedList<>();
-    private Node<K> head;
 
     public Boolean isEmpty() {
-        return linkedList == null;
-
+       return linkedList.isEmpty();
     }
+
 
     public void push(K key) {
         linkedList.insertFirst(key);
     }
-
     public Optional<K> pop() {
         Optional<Node<K>> first = linkedList.removeFirst();
         return first.map(Node::getKey);

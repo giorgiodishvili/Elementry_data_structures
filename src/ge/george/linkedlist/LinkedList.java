@@ -1,19 +1,19 @@
 package ge.george.linkedlist;
 
+import java.util.Iterator;
 import java.util.Optional;
 
-public class LinkedList<K> {
+public class LinkedList<K> implements Iterable<K> {
     private Node<K> head;
     private Node<K> tail;
-//   public long length(){
-//       Node<K> temp=head;
-//       long counter=0;
-//       if (temp)
-//       while (temp.getNext() != null) {
-//           counter++;
-//       }
-//       return counter;
-//   }
+
+    public boolean isEmpty() {
+        return head == null;
+    }
+
+    public Node<K> getTail() {
+        return tail;
+    }
 
     public Node<K> insertFirst(K key) {
         if (head == null) {
@@ -63,7 +63,8 @@ public class LinkedList<K> {
 
     public Optional<Node<K>> removeLast() {
         Node<K> temp = tail;
-        if (temp == null) return Optional.empty();;
+        if (temp == null) return Optional.empty();
+        ;
         if (temp == head) {
             tail = null;
             head = null;
@@ -72,12 +73,13 @@ public class LinkedList<K> {
         tail = tail.getPrev();
         tail.setNext(null);
         temp.setPrev(null);
-        return  Optional.of(temp);
+        return Optional.of(temp);
     }
 
-    public Optional<Node<K>> removeFirst(){
+    public Optional<Node<K>> removeFirst() {
         Node<K> temp = head;
-        if(temp == null) return Optional.empty();;
+        if (temp == null) return Optional.empty();
+        ;
         if (temp == tail) {
             tail = null;
             head = null;
@@ -98,10 +100,37 @@ public class LinkedList<K> {
             sb.append(temp.getKey()).append(", ");
             temp = temp.getNext();
         }
-        if(sb.indexOf(",")>0){
-            sb.setLength(sb.length()-2);
+        if (sb.indexOf(",") > 0) {
+            sb.setLength(sb.length() - 2);
         }
         sb.append("}");
         return sb.toString();
     }
+
+    @Override
+    public Iterator<K> iterator() {
+        return new LinkedListIterator<>(head);
+    }
+
+    private static class LinkedListIterator<T> implements Iterator<T> {
+
+        private Node<T> node;
+
+        private LinkedListIterator(Node<T> node) {
+            this.node = node;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return node != null;
+        }
+
+        @Override
+        public T next() {
+            T key = node.getKey();
+            node = node.getNext();
+            return key;
+        }
+    }
 }
+
