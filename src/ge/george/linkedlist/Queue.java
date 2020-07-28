@@ -10,8 +10,8 @@ public class Queue<K> {
     }
 
     public Optional<K> dequeue() {
-        Optional<Node<K>> last = linkedList.removeLast();
-        return last.map(Node::getKey);
+        Optional<LinkedListNode<K>> last = linkedList.removeLast();
+        return last.map(LinkedListNode::getKey);
     }
 
     public Boolean isEmpty() {

@@ -4,23 +4,23 @@ import java.util.Iterator;
 import java.util.Optional;
 
 public class LinkedList<K> implements Iterable<K> {
-    private Node<K> head;
-    private Node<K> tail;
+    private LinkedListNode<K> head;
+    private LinkedListNode<K> tail;
 
     public boolean isEmpty() {
         return head == null;
     }
 
-    public Node<K> getTail() {
+    public LinkedListNode<K> getTail() {
         return tail;
     }
 
-    public Node<K> insertFirst(K key) {
+    public LinkedListNode<K> insertFirst(K key) {
         if (head == null) {
-            head = new Node<>(key);
+            head = new LinkedListNode<>(key);
             tail = head;
         } else {
-            Node<K> temp = new Node<>(key);
+            LinkedListNode<K> temp = new LinkedListNode<>(key);
             temp.setNext(head);
             this.head.setPrev(temp);
             this.head = temp;
@@ -29,12 +29,12 @@ public class LinkedList<K> implements Iterable<K> {
     }
 
     public boolean delete(K key) {
-        Optional<Node<K>> search = search(key);
+        Optional<LinkedListNode<K>> search = search(key);
         if (search.isEmpty()) {
             return false;
         }
-        Node<K> next = search.get().getNext();
-        Node<K> prev = search.get().getPrev();
+        LinkedListNode<K> next = search.get().getNext();
+        LinkedListNode<K> prev = search.get().getPrev();
         if (prev != null) {
             prev.setNext(next);
         }
@@ -44,11 +44,11 @@ public class LinkedList<K> implements Iterable<K> {
         return true;
     }
 
-    public Optional<Node<K>> search(K key) {
+    public Optional<LinkedListNode<K>> search(K key) {
         if (head == null) {
             return Optional.empty();
         }
-        Node<K> temp = head;
+        LinkedListNode<K> temp = head;
         while (temp.getNext() != null) {
             if (temp.getKey().equals(key)) {
                 break;
@@ -61,8 +61,8 @@ public class LinkedList<K> implements Iterable<K> {
         return Optional.of(temp);
     }
 
-    public Optional<Node<K>> removeLast() {
-        Node<K> temp = tail;
+    public Optional<LinkedListNode<K>> removeLast() {
+        LinkedListNode<K> temp = tail;
         if (temp == null) return Optional.empty();
         ;
         if (temp == head) {
@@ -76,8 +76,8 @@ public class LinkedList<K> implements Iterable<K> {
         return Optional.of(temp);
     }
 
-    public Optional<Node<K>> removeFirst() {
-        Node<K> temp = head;
+    public Optional<LinkedListNode<K>> removeFirst() {
+        LinkedListNode<K> temp = head;
         if (temp == null) return Optional.empty();
         ;
         if (temp == tail) {
@@ -95,7 +95,7 @@ public class LinkedList<K> implements Iterable<K> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("LinkedList{");
-        Node<K> temp = head;
+        LinkedListNode<K> temp = head;
         while (temp != null) {
             sb.append(temp.getKey()).append(", ");
             temp = temp.getNext();
@@ -114,21 +114,21 @@ public class LinkedList<K> implements Iterable<K> {
 
     private static class LinkedListIterator<T> implements Iterator<T> {
 
-        private Node<T> node;
+        private LinkedListNode<T> linkedListNode;
 
-        private LinkedListIterator(Node<T> node) {
-            this.node = node;
+        private LinkedListIterator(LinkedListNode<T> linkedListNode) {
+            this.linkedListNode = linkedListNode;
         }
 
         @Override
         public boolean hasNext() {
-            return node != null;
+            return linkedListNode != null;
         }
 
         @Override
         public T next() {
-            T key = node.getKey();
-            node = node.getNext();
+            T key = linkedListNode.getKey();
+            linkedListNode = linkedListNode.getNext();
             return key;
         }
     }

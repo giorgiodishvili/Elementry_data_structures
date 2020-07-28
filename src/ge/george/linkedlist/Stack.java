@@ -14,8 +14,8 @@ public class Stack<K> {
         linkedList.insertFirst(key);
     }
     public Optional<K> pop() {
-        Optional<Node<K>> first = linkedList.removeFirst();
-        return first.map(Node::getKey);
+        Optional<LinkedListNode<K>> first = linkedList.removeFirst();
+        return first.map(LinkedListNode::getKey);
     }
 
     @Override

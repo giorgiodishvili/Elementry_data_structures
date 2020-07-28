@@ -5,7 +5,6 @@ import java.io.IOException;
 
 public enum SingletonEnum {
     INSTANCE;
-
     private FileOutputStream fos;
 
     SingletonEnum() {
