@@ -54,6 +54,61 @@ public class BinarySearchTree<V extends Comparable<V>> {
         return false;
     }
 
+    public Optional<V> maximum(V value) {
+        Node<V> x = getNode(value);
+        if (root == null) return Optional.empty();
+        while (x.getRight() != null) {
+            x = x.getRight();
+        }
+        return Optional.of(x.getValue());
+    }
+
+    public Optional<V> minimum(V value) {
+        Node<V> x = getNode(value);
+        if (root == null) return Optional.empty();
+        while (x.getLeft() != null) {
+            x = x.getLeft();
+        }
+        return Optional.of(x.getValue());
+    }
+
+    public Node<V> getNode(V value) {
+        Node<V> x = root;
+        while (x != null) {
+            int c = x.getValue().compareTo(value);
+            if (c == 0) return x;
+            x = 0 > c ? x.getRight() : x.getLeft();
+        }
+        return null;
+    }
+
+    public Optional<V> successor(V value) {
+        Node<V> x = getNode(value);
+        if (x.getRight() != null) {
+            return minimum(value);
+        }
+        Node<V> y = x.getPredecessor();
+        while (y != null && x == y.getRight()) {
+            x = y;
+            y = y.getPredecessor();
+        }
+        return y == null ? Optional.empty() : Optional.of(y.getValue());
+
+    }
+
+    public Optional<V> predecessor(V value) {
+        Node<V> x = getNode(value);
+        if (x.getLeft() != null) {
+            return maximum(value);
+        }
+        Node<V> y = x.getPredecessor();
+        while (y != null && x == y.getRight()) {
+            x = y;
+            y = y.getPredecessor();
+        }
+        return y == null ? Optional.empty() : Optional.of(y.getValue());
+
+    }
 
     @Override
     public String toString() {
