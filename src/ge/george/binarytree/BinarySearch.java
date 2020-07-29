@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class BinarySearch<V> {
-    List<V> data = new ArrayList<>();
+    List<V> data;
     Comparator<V> comparator;
 
     public BinarySearch(Comparator<V> comparator) {
